@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="topbar">
+
+        <h1>Student Dashboard</h1>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+
+    <div class="container">
+
+        <h3>Add Complaint</h3>
+
+        <select id="category">
+
+            <option value="">
+                Select Category
+            </option>
+
+            <option value="Electrical">
+                Electrical
+            </option>
+
+            <option value="Water">
+                Water
+            </option>
+
+            <option value="WiFi">
+                WiFi
+            </option>
+
+            <option value="Hostel">
+                Hostel
+            </option>
+
+            <option value="Cleaning">
+                Cleaning
+            </option>
+
+            <option value="Classroom">
+                Classroom
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+        <textarea
+            id="complaint"
+            rows="5"
+            placeholder="Enter Complaint"
+        ></textarea>
+
+        <button onclick="addComplaint()">
+            Submit Complaint
+        </button>
+
+        <button
+            onclick="clearComplaint()"
+            class="clear-btn"
+        >
+            Clear
+        </button>
+
+    </div>
+
+
+    <h2 style="text-align:center;">
+        My Complaints
+    </h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Category</th>
+
+                <th>Complaint</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tableBody">
+
+        </tbody>
+
+    </table>
+
+
+    <script src="js/script.js"></script>
+
+    <script>
+
+        loadStudentComplaints();
+
+    </script>
+
+</body>
+
+</html>
