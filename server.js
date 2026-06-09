@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const path = require("path");
+const nodemailer = require("nodemailer);
 
 const app = express();
 
@@ -40,6 +41,14 @@ db.connect((err) => {
 
     }
 
+});
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
 });
 
 app.get("/", (req, res) => {
@@ -327,7 +336,26 @@ app.post("/addComplaint", (req, res) => {
 
             else {
 
-                res.send("Complaint Added");
+                
+
+                transporter.sendMail({
+  from: process.env.EMAIL_USER,
+  to: student_email,
+  subject: "Complaint Registered",
+  html: `
+    <h2>Complaint Submitted Successfully</h2>
+    <p>Hello ${student_name},</p>
+    <p>Your complaint has been registered.</p>
+    <p><b>Category:</b> ${category}</p>
+    <p><b>Status:</b> Pending</p>
+  `
+}, (mailErr) => {
+  if (mailErr) {
+    console.log(mailErr);
+  }
+});
+
+res.send("Complaint Added");
 
             }
 
