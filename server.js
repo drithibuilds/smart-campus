@@ -12,13 +12,15 @@ app.use(express.static("public"));
 
 const db = mysql.createConnection({
 
-    host: "localhost",
+    host: mysql.railway.internal,
 
-    user: "root",
+    user: root,
 
-    password: "drithi123",
+    password: lHynTorylhuqDeGnmpqjUENVHlzUeUFL,
 
-    database: "campusdb"
+    port: 3306,
+
+    database: railway
 
 });
 
