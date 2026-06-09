@@ -24,6 +24,10 @@ const db = mysql.createConnection({
 
 });
 
+console.log("HOST:", process.env.MYSQLHOST);
+console.log("PORT:", process.env.MYSQLPORT);
+console.log("USER:", process.env.MYSQLUSER);
+console.log("DATABASE:", process.env.MYSQLDATABASE);
 db.connect((err) => {
 
     if (err) {
