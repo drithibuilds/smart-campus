@@ -12,15 +12,15 @@ app.use(express.static("public"));
 
 const db = mysql.createConnection({
 
-    host: mysql.railway.internal,
+    host: process.env.MYSQLHOST,
 
-    user: root,
+    user: process.env.MYSQLUSER,
 
-    password: lHynTorylhuqDeGnmpqjUENVHlzUeUFL,
+    password: process.env.MYSQLPASSWORD,
 
-    port: 3306,
+    port: process.env.MYSQLDATABASE,
 
-    database: railway
+    database: process.env.MYSQLPORT
 
 });
 
