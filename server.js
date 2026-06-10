@@ -52,6 +52,31 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+async function sendComplaintEmail(toEmail, complaintData) {
+  try {
+    const mailOptions = {
+      from: `Smart Campus <${process.env.EMAIL_USER}>`,
+      to: toEmail,
+      subject: "Complaint Registered Successfully",
+      html: `
+        <div style="font-family:Arial;padding:10px">
+          <h2>Complaint Registered</h2>
+          <p><b>Category:</b> ${complaintData.category}</p>
+          <p><b>Complaint:</b> ${complaintData.complaint}</p>
+          <hr/>
+          <p>Status: <b>Pending</b></p>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent:", info.messageId);
+
+  } catch (error) {
+    console.error("Email failed:", error.message);
+  }
+}
+
 app.get("/", (req, res) => {
 
     res.sendFile(
@@ -278,16 +303,13 @@ app.delete(
 app.post("/addComplaint", (req, res) => {
 
     const {
-
         student_name,
         student_email,
         category,
         complaint
-
     } = req.body;
 
     const sql =
-
         `INSERT INTO complaints
         (
             student_name,
@@ -310,62 +332,31 @@ app.post("/addComplaint", (req, res) => {
         )`;
 
     db.query(
-
         sql,
-
         [
-
             student_name,
-
             student_email,
-
             category,
-
             complaint
-
         ],
-
         (err, result) => {
 
             if (err) {
-
                 console.log(err);
-
                 res.send("Failed");
+            } else {
 
+                // ✅ EMAIL SENT AFTER SUCCESS
+                sendComplaintEmail(student_email, {
+                    category,
+                    complaint
+                });
+
+                res.send("Complaint Added Successfully");
             }
-
-            else {
-
-                
-
-                transporter.sendMail({
-  from: process.env.EMAIL_USER,
-  to: student_email,
-  subject: "Complaint Registered",
-  html: `
-    <h2>Complaint Submitted Successfully</h2>
-    <p>Hello ${student_name},</p>
-    <p>Your complaint has been registered.</p>
-    <p><b>Category:</b> ${category}</p>
-    <p><b>Status:</b> Pending</p>
-  `
-}, (mailErr) => {
-  if (mailErr) {
-    console.log(mailErr);
-  }
-});
-
-res.send("Complaint Added");
-
-            }
-
         }
-
     );
-
 });
-
 // ================= GET COMPLAINTS =================
 
 app.get("/complaints", (req, res) => {
