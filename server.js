@@ -30,6 +30,8 @@ console.log("HOST:", process.env.MYSQLHOST);
 console.log("PORT:", process.env.MYSQLPORT);
 console.log("USER:", process.env.MYSQLUSER);
 console.log("DATABASE:", process.env.MYSQLDATABASE);
+console.log("EMAIL FUNCTION TRIGGERED");
+sendComplaintEmail(student_email, { category, complaint });
 db.connect((err) => {
 
     if (err) {
