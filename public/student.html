@@ -1,124 +1,94 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+<title>Dashboard</title>
 
-    <title>Student Dashboard</title>
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f4f6f9;
+}
 
-    <link rel="stylesheet" href="css/style.css">
+.nav {
+    background: #343a40;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #218838;
+}
+</style>
 
 </head>
 
 <body>
 
-    <div class="topbar">
+<div class="nav">Student Dashboard</div>
 
-        <h1>Student Dashboard</h1>
+<div class="container">
+    <div class="card">
+        <h3>Submit Complaint</h3>
 
-        <button onclick="logout()">
-            Logout
-        </button>
+        <input id="name" placeholder="Your Name">
+        <input id="email" placeholder="Email">
+        <input id="category" placeholder="Category">
+        <textarea id="complaint" placeholder="Describe issue"></textarea>
 
+        <button onclick="submitComplaint()">Submit</button>
     </div>
+</div>
 
-
-    <div class="container">
-
-        <h3>Add Complaint</h3>
-
-        <select id="category">
-
-            <option value="">
-                Select Category
-            </option>
-
-            <option value="Electrical">
-                Electrical
-            </option>
-
-            <option value="Water">
-                Water
-            </option>
-
-            <option value="WiFi">
-                WiFi
-            </option>
-
-            <option value="Hostel">
-                Hostel
-            </option>
-
-            <option value="Cleaning">
-                Cleaning
-            </option>
-
-            <option value="Classroom">
-                Classroom
-            </option>
-
-            <option value="Other">
-                Other
-            </option>
-
-        </select>
-
-        <textarea
-            id="complaint"
-            rows="5"
-            placeholder="Enter Complaint"
-        ></textarea>
-
-        <button onclick="addComplaint()">
-            Submit Complaint
-        </button>
-
-        <button
-            onclick="clearComplaint()"
-            class="clear-btn"
-        >
-            Clear
-        </button>
-
-    </div>
-
-
-    <h2 style="text-align:center;">
-        My Complaints
-    </h2>
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>ID</th>
-
-                <th>Category</th>
-
-                <th>Complaint</th>
-
-                <th>Status</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tableBody">
-
-        </tbody>
-
-    </table>
-
-
-    <script src="js/script.js"></script>
-
-    <script>
-
-        loadStudentComplaints();
-
-    </script>
+<script>
+function submitComplaint() {
+    fetch("http://localhost:3000/addComplaint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_name: document.getElementById("name").value,
+            student_email: document.getElementById("email").value,
+            category: document.getElementById("category").value,
+            complaint: document.getElementById("complaint").value
+        })
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+    });
+}
+</script>
 
 </body>
-
 </html>
