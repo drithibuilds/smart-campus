@@ -330,23 +330,26 @@ app.post("/addComplaint", (req, res) => {
         [student_name, student_email, category, complaint],
         async (err, result) => {
 
+            // ❌ BEFORE: do NOT send email here (before DB insert)
+
             if (err) {
                 console.log(err);
                 return res.send("Failed");
             }
 
-            // ✅ EMAIL ONLY AFTER SUCCESS
+            // ✅ AFTER SUCCESS: SEND EMAIL HERE
             try {
                 await sendComplaintEmail(student_email, {
                     student_name,
                     category,
                     complaint
                 });
-            } catch (e) {
-                console.log("Email error:", e.message);
+            } catch (emailErr) {
+                console.log("Email failed:", emailErr.message);
             }
 
-            res.send("Complaint Added + Email Sent");
+            // RESPONSE AFTER EVERYTHING
+            res.send("Complaint added and email sent");
         }
     );
 });
