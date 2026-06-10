@@ -311,8 +311,8 @@ app.post("/addComplaint", (req, res) => {
         complaint
     } = req.body;
 
-    const sql =
-        `INSERT INTO complaints
+    const sql = `
+        INSERT INTO complaints
         (
             student_name,
             student_email,
@@ -323,39 +323,30 @@ app.post("/addComplaint", (req, res) => {
             status
         )
         VALUES
-        (
-            ?,
-            ?,
-            ?,
-            'Not Assigned',
-            'Medium',
-            ?,
-            'Pending'
-        )`;
+        (?, ?, ?, 'Not Assigned', 'Medium', ?, 'Pending')
+    `;
 
-    db.query(
-        sql,
-        [
-            student_name,
-            student_email,
-            category,
-            complaint
-        ],
-        (err, result) => {
+    db.query(sql,
+        [student_name, student_email, category, complaint],
+        async (err, result) => {
 
             if (err) {
                 console.log(err);
-                res.send("Failed");
-            } else {
+                return res.send("Failed");
+            }
 
-                // ✅ EMAIL SENT AFTER SUCCESS
-                sendComplaintEmail(student_email, {
+            // ✅ EMAIL ONLY AFTER SUCCESS
+            try {
+                await sendComplaintEmail(student_email, {
+                    student_name,
                     category,
                     complaint
                 });
-
-                res.send("Complaint Added Successfully");
+            } catch (e) {
+                console.log("Email error:", e.message);
             }
+
+            res.send("Complaint Added + Email Sent");
         }
     );
 });
