@@ -1,53 +1,188 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Login</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Campus Complaint Management System</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+body{
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1e3c72,
+        #2a5298
+    );
+
 }
 
-.card h2 {
-    text-align: center;
-    margin-bottom: 20px;
+/* LOGIN CARD */
+
+.card{
+
+    width:420px;
+
+    padding:40px;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+
+    box-shadow:0 8px 32px rgba(0,0,0,0.25);
+
+    color:white;
+
 }
 
-.card input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+/* HEADING */
+
+.card h1{
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+    font-size:28px;
+
 }
 
-.card button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+.card p{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+    color:#e5e7eb;
+
 }
 
-.card button:hover {
-    background: #0056b3;
+/* INPUTS */
+
+.input-group{
+
+    margin-bottom:18px;
+
 }
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+/* BUTTON */
+
+.btn{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#00c896;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.btn:hover{
+
+    background:#00a67d;
+
+}
+
+/* REGISTER LINK */
+
+.register{
+
+    text-align:center;
+
+    margin-top:18px;
+
+}
+
+.register a{
+
+    color:#ffffff;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+}
+
+.register a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* PROJECT TITLE */
+
+.logo{
+
+    text-align:center;
+
+    font-size:50px;
+
+    margin-bottom:15px;
+
+}
+
 </style>
 
 </head>
@@ -55,32 +190,119 @@ body {
 <body>
 
 <div class="card">
-    <h2>Student Login</h2>
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+
+    <div class="logo">
+        🎓
+    </div>
+
+    <h1>Smart Campus</h1>
+
+    <p>Complaint Management System</p>
+
+    <div class="input-group">
+
+        <label>Email Address</label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+        >
+
+    </div>
+
+    <div class="input-group">
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+        >
+
+    </div>
+
+    <button
+        class="btn"
+        onclick="login()"
+    >
+        Login
+    </button>
+
+    <div class="register">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Register Here
+        </a>
+
+    </div>
+
 </div>
 
 <script>
+
 function login() {
-    fetch("http://localhost:3000/login", {
+
+    fetch("/login", {
+
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
         body: JSON.stringify({
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
+
+            email:
+            document.getElementById("email").value,
+
+            password:
+            document.getElementById("password").value
+
         })
+
     })
+
     .then(res => res.json())
+
     .then(data => {
-        if (data && data.email) {
-            alert("Login successful");
-            window.location.href = "dashboard.html";
-        } else {
-            alert("Invalid login");
+
+        if(data.role === "student"){
+
+            localStorage.setItem(
+                "student",
+                JSON.stringify(data)
+            );
+
+            window.location.href =
+            "student.html";
         }
+
+        else if(data.role === "admin"){
+
+            localStorage.setItem(
+                "admin",
+                JSON.stringify(data)
+            );
+
+            window.location.href =
+            "admin.html";
+        }
+
+        else{
+
+            alert(
+                "Invalid Email or Password"
+            );
+        }
+
     });
+
 }
+
 </script>
 
 </body>

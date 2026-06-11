@@ -1,94 +1,488 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Dashboard</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Dashboard</title>
 
 <style>
-body {
-    font-family: Arial;
-    margin: 0;
-    background: #f4f6f9;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
-.nav {
-    background: #343a40;
-    color: white;
-    padding: 15px;
-    font-size: 18px;
+body{
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    min-height:100vh;
 }
 
-.container {
-    padding: 20px;
+/* NAVBAR */
+
+.navbar{
+
+    height:70px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.title{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#1e3c72;
+
 }
 
-input, textarea {
-    width: 100%;
-    margin: 8px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.logout-btn{
+
+    background:#dc2626;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
 }
 
-button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 6px;
-    cursor: pointer;
+.logout-btn:hover{
+
+    background:#b91c1c;
+
 }
 
-button:hover {
-    background: #218838;
+/* MAIN SECTION */
+
+.main-container{
+
+    display:flex;
+
+    gap:30px;
+
+    padding:30px;
+
+    align-items:flex-start;
+
 }
+
+/* PROFILE CARD */
+
+.profile-card{
+
+    width:320px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+.profile-card h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    color:#1e3c72;
+
+}
+
+.profile-field{
+
+    margin-bottom:15px;
+
+}
+
+.profile-field label{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    font-weight:bold;
+
+}
+
+.profile-field input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    background:#f5f5f5;
+
+}
+
+/* COMPLAINT CARD */
+
+.complaint-card{
+
+    flex:1;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+.complaint-card h2{
+
+    text-align:center;
+
+    color:#1e3c72;
+
+    margin-bottom:20px;
+
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+textarea{
+
+    resize:none;
+
+}
+
+.submit-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+.submit-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.clear-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:10px;
+
+    background:#dc2626;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+.clear-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+/* HISTORY CARD */
+
+.history-card{
+
+    margin:0 30px 30px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+.history-card h2{
+
+    text-align:center;
+
+    color:#1e3c72;
+
+    margin-bottom:20px;
+
+}
+
+/* TABLE */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+th,
+td{
+
+    border:1px solid #ddd;
+
+    padding:12px;
+
+    text-align:center;
+
+}
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div class="nav">Student Dashboard</div>
+<!-- NAVBAR -->
 
-<div class="container">
-    <div class="card">
-        <h3>Submit Complaint</h3>
+<div class="navbar">
 
-        <input id="name" placeholder="Your Name">
-        <input id="email" placeholder="Email">
-        <input id="category" placeholder="Category">
-        <textarea id="complaint" placeholder="Describe issue"></textarea>
+    <div class="title">
 
-        <button onclick="submitComplaint()">Submit</button>
+        🎓 Smart Campus Complaint Management System
+
     </div>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
 </div>
 
+<!-- PROFILE + COMPLAINT FORM -->
+
+<div class="main-container">
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <h2>Student Profile</h2>
+
+        <div class="profile-field">
+
+            <label>Student ID</label>
+
+            <input
+                type="text"
+                id="studentId"
+                readonly
+            >
+
+        </div>
+
+        <div class="profile-field">
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                id="studentName"
+                readonly
+            >
+
+        </div>
+
+        <div class="profile-field">
+
+            <label>Email</label>
+
+            <input
+                type="text"
+                id="studentEmail"
+                readonly
+            >
+
+        </div>
+
+    </div>
+
+    <!-- COMPLAINT FORM -->
+
+    <div class="complaint-card">
+
+        <h2>Submit Complaint</h2>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Student Name"
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+        >
+
+        <select id="category">
+
+            <option value="">
+                Select Complaint Category
+            </option>
+
+            <option>Electrical</option>
+            <option>WiFi</option>
+            <option>Water</option>
+            <option>Hostel</option>
+            <option>Cleaning</option>
+            <option>Classroom</option>
+            <option>Security</option>
+            <option>Transport</option>
+            <option>Other</option>
+
+        </select>
+
+        <textarea
+            id="complaint"
+            rows="6"
+            placeholder="Describe your issue..."
+        ></textarea>
+
+        <button
+    class="submit-btn"
+    onclick="addComplaint()"
+>
+    Submit Complaint
+</button>
+        <button
+    class="clear-btn"
+    onclick="clearComplaint()"
+>
+    Clear Form
+</button>
+
+    </div>
+
+</div>
+
+<!-- COMPLAINT HISTORY -->
+
+<div class="history-card">
+
+    <h2>My Complaint History</h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Category</th>
+                <th>Complaint</th>
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="js/script.js"></script>
+
 <script>
-function submitComplaint() {
-    fetch("http://localhost:3000/addComplaint", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            student_name: document.getElementById("name").value,
-            student_email: document.getElementById("email").value,
-            category: document.getElementById("category").value,
-            complaint: document.getElementById("complaint").value
-        })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        alert(msg);
-    });
-}
+
+loadStudentProfile();
+
+loadStudentComplaints();
+
 </script>
 
 </body>
 </html>
+

@@ -1,31 +1,322 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Admin Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    min-height:100vh;
+    padding-bottom:30px;
+}
+
+/* TOPBAR */
+
+.topbar{
+
+    background:white;
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+
+}
+
+.topbar h1{
+
+    color:#1e3c72;
+
+}
+
+.topbar button{
+
+    background:#dc2626;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+.topbar button:hover{
+
+    background:#b91c1c;
+
+}
+
+/* STATISTICS */
+
+.stats-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+    padding:30px;
+
+}
+
+.card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+.card h3{
+
+    color:#555;
+
+    margin-bottom:10px;
+
+}
+
+.card h2{
+
+    color:#2563eb;
+
+    font-size:32px;
+
+}
+
+/* FILTER SECTION */
+
+.filter-container{
+
+    margin:0 30px 30px;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.filter-container input,
+.filter-container select{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+/* TABLE SECTION */
+
+.table-container{
+
+    margin:0 30px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+.table-container h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    color:#1e3c72;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+th,
+td{
+
+    border:1px solid #ddd;
+
+    padding:10px;
+
+    text-align:center;
+
+}
+
+tr:nth-child(even){
+
+    background:#f8fafc;
+
+}
+
+td select{
+
+    width:100%;
+
+    padding:8px;
+
+    border-radius:6px;
+
+    border:1px solid #ccc;
+
+}
+
+td button{
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    color:white;
+
+}
+
+td button:first-child{
+
+    background:#2563eb;
+
+}
+
+.delete-btn{
+
+    background:#dc2626;
+
+}
+
+.delete-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .stats-container{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .stats-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .filter-container{
+
+        flex-direction:column;
+
+    }
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-    <div class="topbar">
+<div class="topbar">
 
-        <h1>Admin Dashboard</h1>
+    <h1>
+        🎓 Smart Campus Admin Dashboard
+    </h1>
 
-        <button onclick="logout()">
-            Logout
-        </button>
+    <button onclick="logout()">
+        Logout
+    </button>
 
-    </div>
+</div>
 
-    <div class="stats-container">
+<!-- STATS -->
+
+<div class="stats-container">
 
     <div class="card">
 
-        <h3>Total</h3>
+        <h3>Total Complaints</h3>
 
         <h2 id="totalComplaints">0</h2>
 
@@ -57,12 +348,14 @@
 
 </div>
 
-    <div class="filter-container">
+<!-- FILTERS -->
+
+<div class="filter-container">
 
     <input
         type="text"
         id="searchText"
-        placeholder="Search Complaint"
+        placeholder="Search Complaint..."
         onkeyup="loadAdminComplaints()"
     >
 
@@ -71,25 +364,11 @@
         onchange="loadAdminComplaints()"
     >
 
-        <option value="">
-            All Status
-        </option>
-
-        <option value="Pending">
-            Pending
-        </option>
-
-        <option value="Assigned">
-            Assigned
-        </option>
-
-        <option value="In Progress">
-            In Progress
-        </option>
-
-        <option value="Resolved">
-            Resolved
-        </option>
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Assigned">Assigned</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
 
     </select>
 
@@ -98,45 +377,24 @@
         onchange="loadAdminComplaints()"
     >
 
-        <option value="">
-            All Categories
-        </option>
-
-        <option value="Electrical">
-            Electrical
-        </option>
-
-        <option value="Water">
-            Water
-        </option>
-
-        <option value="WiFi">
-            WiFi
-        </option>
-
-        <option value="Hostel">
-            Hostel
-        </option>
-
-        <option value="Cleaning">
-            Cleaning
-        </option>
-
-        <option value="Classroom">
-            Classroom
-        </option>
-
-        <option value="Other">
-            Other
-        </option>
+        <option value="">All Categories</option>
+        <option value="Electrical">Electrical</option>
+        <option value="Water">Water</option>
+        <option value="WiFi">WiFi</option>
+        <option value="Hostel">Hostel</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Classroom">Classroom</option>
+        <option value="Other">Other</option>
 
     </select>
 
 </div>
 
-    <h2 style="text-align:center;">
-        All Complaints
-    </h2>
+<!-- TABLE -->
+
+<div class="table-container">
+
+    <h2>All Complaints</h2>
 
     <table>
 
@@ -145,23 +403,14 @@
             <tr>
 
                 <th>ID</th>
-
                 <th>Name</th>
-
                 <th>Email</th>
-
                 <th>Category</th>
-
                 <th>Complaint</th>
-
                 <th>Department</th>
-
                 <th>Priority</th>
-
                 <th>Status</th>
-
                 <th>Update</th>
-
                 <th>Delete</th>
 
             </tr>
@@ -174,16 +423,18 @@
 
     </table>
 
-    <script src="js/script.js"></script>
+</div>
 
-    <script>
+<script src="js/script.js"></script>
 
-    loadAdminComplaints();
+<script>
 
-    loadDashboardStats();
+loadAdminComplaints();
+
+loadDashboardStats();
 
 </script>
 
 </body>
-
 </html>
+

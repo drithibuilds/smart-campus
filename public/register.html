@@ -1,10 +1,194 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-    <title>Student Registration</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
+<title>Student Registration</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1e3c72,
+        #2a5298
+    );
+
+}
+
+/* REGISTRATION CARD */
+
+.container{
+
+    width:420px;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(15px);
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.25);
+
+    color:white;
+
+}
+
+.logo{
+
+    text-align:center;
+
+    font-size:60px;
+
+    margin-bottom:10px;
+
+}
+
+.container h2{
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+    font-size:34px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+    font-size:16px;
+
+    opacity:0.9;
+
+}
+
+/* INPUTS */
+
+.input-group{
+
+    margin-bottom:20px;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    outline:none;
+
+    background:white;
+
+}
+
+/* BUTTON */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#14cba8;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+button:hover{
+
+    background:#0fb18f;
+
+}
+
+/* LOGIN LINK */
+
+.login-text{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    font-size:16px;
+
+}
+
+.login-text a{
+
+    color:white;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+}
+
+.login-text a:hover{
+
+    text-decoration:underline;
+
+}
+
+</style>
 
 </head>
 
@@ -12,35 +196,64 @@
 
 <div class="container">
 
-    <h2>Student Registration</h2>
+    <div class="logo">
+        🎓
+    </div>
 
-    <input
-        type="text"
-        id="name"
-        placeholder="Enter Name"
-    >
+    <h2>Register</h2>
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Enter Email"
-    >
+    <p class="subtitle">
+        Smart Campus Complaint Management System
+    </p>
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Enter Password"
-    >
+    <div class="input-group">
+
+        <label>Full Name</label>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+        >
+
+    </div>
+
+    <div class="input-group">
+
+        <label>Email Address</label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+        >
+
+    </div>
+
+    <div class="input-group">
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Create password"
+        >
+
+    </div>
 
     <button onclick="register()">
         Register
     </button>
 
-    <p>
+    <p class="login-text">
+
         Already have an account?
+
         <a href="login.html">
-            Login
+            Login Here
         </a>
+
     </p>
 
 </div>
@@ -49,3 +262,4 @@
 
 </body>
 </html>
+

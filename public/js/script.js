@@ -577,6 +577,38 @@ async function deleteComplaint(id) {
 
 
 
-deleteComplaint();
+}
+
+// ================= LOAD STUDENT PROFILE =================
+
+function loadStudentProfile() {
+
+    const student =
+    JSON.parse(
+        localStorage.getItem("student")
+    );
+
+    if (!student) {
+
+        window.location.href =
+        "login.html";
+
+        return;
+    }
+
+    document.getElementById(
+        "studentId"
+    ).value =
+    student.id || "";
+
+    document.getElementById(
+        "studentName"
+    ).value =
+    student.name || "";
+
+    document.getElementById(
+        "studentEmail"
+    ).value =
+    student.email || "";
 
 }
